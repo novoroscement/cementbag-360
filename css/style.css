@@ -63,8 +63,8 @@ Main Components
   padding: 2em 0;
 }
 .cd-product-viewer-wrapper > div {
-  width: 80%;
-  height: 80%;
+  width: 810px;
+  height: 800px;
   display: inline-block;
 }
 .cd-product-viewer-wrapper .product-viewer {
@@ -238,6 +238,8 @@ Main Components
   position: absolute;
   z-index: 100;
   pointer-events:none;
+  width: 810px;
+  height: 800px;
 }
 
 .feature {

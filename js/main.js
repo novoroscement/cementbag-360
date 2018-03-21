@@ -24,7 +24,7 @@ jQuery(document).ready(function($){
 	        this.element.fadeOut(100);
 	        return;
 	    }
-	    
+
 	    this.element.css({ 
 	      top: frameInfo.y, 
 	      left: frameInfo.x,
@@ -80,6 +80,7 @@ jQuery(document).ready(function($){
 
 	productViewer.prototype.updateFeaturesTransform = function() {
 		var imageWrapperPosition = this.imageWrapper.position();
+		
 		this.featuresContainer.css({
 			position: 'absolute',
 			top: imageWrapperPosition.top,
@@ -92,8 +93,16 @@ jQuery(document).ready(function($){
 	productViewer.prototype.loadFeatures = function() {
 		var self = this;
 
-		this.imageWrapper.resize(function () { self.updateFeaturesTransform() });
-		$(window).resize(function () { self.updateFeaturesTransform() });
+		this.imageWrapper.resize(function () { 
+			self.updateFeaturesTransform();
+	  		self.updateFeatures();
+		});
+
+		$(window).resize(function () { 
+			self.updateFeaturesTransform();
+	  		self.updateFeatures();
+	  	});
+
 		this.updateFeaturesTransform();
 
 		$('.feature').each(function(index) {
@@ -110,8 +119,6 @@ jQuery(document).ready(function($){
 			  var frameInfo = new frameVisibility(frame, x, y);
 			  feature.frames.push(frameInfo);
 			}
-
-			feature.changeVisibility(self.visibleFrame);
 			
 			self.features.push(feature);
 		});
@@ -127,6 +134,8 @@ jQuery(document).ready(function($){
 				transformElement(self.handleFill, 'scaleX(1)');
 				self.dragImage();
 				if(self.handle) self.dragHandle();
+
+	  			self.updateFeatures();
 			} else {
 				//sprite image has not been loaded - increase self.handleFill scale value
 				var newPercentage = parseFloat(percentage) + .1;
@@ -186,6 +195,8 @@ jQuery(document).ready(function($){
 
 	    //update image frame
 	    self.updateFrame();
+	    self.updateFeatures();
+
 	    //update handle position
 	    $('.cd-draggable', self.handleContainer).css('left', widthValue + '%').one('mouseup vmouseup', function () {
 	        $(this).removeClass('cd-draggable');
@@ -247,6 +258,7 @@ jQuery(document).ready(function($){
         if( newFrame != self.visibleFrame ) {
         	self.visibleFrame = newFrame;
         	self.updateFrame();
+        	self.updateFeatures();
         	self.xPosition = e.pageX;
         }
 
@@ -264,9 +276,12 @@ jQuery(document).ready(function($){
 		var transformValue = - (100 * this.visibleFrame/this.frames);
 		transformElement(this.slideShow, 'translateX('+transformValue+'%)');
 
-		var visibleFrame = this.visibleFrame;
+	}
+
+	productViewer.prototype.updateFeatures = function() {
+		var self = this;
 		this.features.forEach(function(feature) {
-        	feature.changeVisibility(visibleFrame);
+        	feature.changeVisibility(self.visibleFrame);
         });
 	}
 
