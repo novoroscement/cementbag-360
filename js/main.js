@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
 	    this.frames = [];
 	    this.tooltip = new Tooltip(element, {
 	    	placement: 'center',
-	    	trigger: 'click',
+	    	trigger: 'hover focus',
 	    	title: element.data('tooltip')
 	    });
 	}
@@ -55,10 +55,8 @@ jQuery(document).ready(function($){
 		this.animating = false;
 		this.xPosition = 0;
 		this.features = [];
-		this.featuresContainer = this.element.find('.features');
-
-		this.loadFrames();
-		this.loadFeatures();
+        this.featuresContainer = this.element.find('.features');
+	    this.busy = false;
 	} 
 
 	productViewer.prototype.loadFrames = function() {
@@ -90,7 +88,7 @@ jQuery(document).ready(function($){
 		});
 	};
 
-	productViewer.prototype.loadFeatures = function() {
+	productViewer.prototype.loadFeatures = function(callback) {
 		var self = this;
 
 		this.imageWrapper.resize(function () { 
@@ -105,7 +103,9 @@ jQuery(document).ready(function($){
 
 		this.updateFeaturesTransform();
 
-		$('.feature').each(function(index) {
+	    var featureDomList = $('.feature');
+
+	    featureDomList.each(function(index) {
 			var featureDom = $(this);
 			var feature = new productFeature(featureDom);
 			var dataSlide = featureDom.data('slide');
@@ -120,9 +120,12 @@ jQuery(document).ready(function($){
 			  feature.frames.push(frameInfo);
 			}
 			
-			self.features.push(feature);
-		});
-	}
+            self.features.push(feature);
+
+	        if (callback != null && callback != undefined && index === featureDomList.length - 1)
+	            callback();
+	    });
+    }
 
 	productViewer.prototype.loading = function(percentage) {
 		var self = this;
@@ -276,7 +279,35 @@ jQuery(document).ready(function($){
 		var transformValue = - (100 * this.visibleFrame/this.frames);
 		transformElement(this.slideShow, 'translateX('+transformValue+'%)');
 
-	}
+    }
+
+    productViewer.prototype.slideTo = function (targetFrame, targetFeature, increment) {
+        if (this.busy) return;
+        this.busy = true;
+
+        targetFrame = parseInt(targetFrame) % this.frames;
+
+        if (this.visibleFrame === targetFrame) {
+            targetFeature.tooltip.show();
+            this.updateHandle();
+            this.updateFeatures();
+            this.busy = false;
+            return;
+        }
+
+        if (increment == undefined) {
+            increment = (this.visibleFrame + this.frames - targetFrame) > (targetFrame - this.visibleFrame) ? -1 : 1;
+        }
+
+        this.visibleFrame = (this.visibleFrame + increment) % this.frames;
+        this.updateFrame();
+
+        var self = this;
+        setTimeout(function () {
+            self.busy = false;
+            self.slideTo(targetFrame, targetFeature, increment);
+        }, 24);
+    }
 
 	productViewer.prototype.updateFeatures = function() {
 		var self = this;
@@ -293,10 +324,52 @@ jQuery(document).ready(function($){
 			'-o-transform': value,
 			'transform': value,
 		});
-	}
+    }
+    
+    var viewer = new productViewer($('.cd-product-viewer-wrapper'));
 
-	var productToursWrapper = $('.cd-product-viewer-wrapper');
-	productToursWrapper.each(function(){
-		new productViewer($(this));
-	});
+    viewer.loadFrames();
+    viewer.loadFeatures();
+    
+    $('.feature-explicit').each(function () {
+        var productFeature = null;
+        for (var i = viewer.features.length - 1; i >= 0; i--) {
+            if ($(this).data('feature-id') === viewer.features[i].element.attr('id')) {
+                productFeature = viewer.features[i];
+            }
+        }
+
+        if (productFeature == null)
+            return;
+
+        $($(this).children('.feature-explicit-expand')[0]).text(productFeature.element.data('tooltip'));
+
+        var runSlideShow = false;
+        var targetSlide = parseInt($(this).data('slide'));
+        $(this).hover(function () {
+            
+            runSlideShow = true;
+            setTimeout(function () {
+
+                if (!runSlideShow)
+                    return;
+
+                runSlideShow = false;
+
+                viewer.features.forEach(function (f) {
+                    f.tooltip.hide();
+                    f.element.css({
+                        visibility: 'hidden'
+                    });
+                });
+                viewer.slideTo(targetSlide, productFeature);
+            }, 250);
+        });
+
+        $(this).mouseleave(function () {
+            runSlideShow = false;
+            productFeature.tooltip.hide();
+        });
+    });
+
 });
