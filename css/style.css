@@ -63,10 +63,10 @@ Main Components
     flex-direction: row;
 }
 .cd-product-viewer-mask {
-    min-width: 810px;
-    width: 810px;
-    min-height: 800px;
-    height: 800px;
+    min-width: 350px;
+    width: 350px;
+    min-height: 350px;
+    height: 350px;
 }
 .cd-product-viewer-wrapper .product-viewer {
   position: relative;
@@ -105,9 +105,9 @@ Main Components
   position: relative;
   z-index: 2;
   width: 60%;
-  max-width: 300px;
+  max-width: 150px;
   border-radius: 50em;
-  margin: -4em auto 3em;
+  margin: -1.5em auto 3em;
   height: 4px;
   background: #4d4d4d;
 }
@@ -149,10 +149,10 @@ Main Components
   position: absolute;
   z-index: 2;
   display: inline-block;
-  height: 44px;
-  width: 44px;
+  height: 22px;
+  width: 22px;
   left: 0;
-  top: -20px;
+  top: -10px;
   background: #b54240 url(../img/cd-arrows.svg) no-repeat center center;
   border-radius: 50%;
   box-shadow: 0 0 0 6px rgba(181, 66, 64, 0.3), 0 0 20px rgba(0, 0, 0, 0.2);
@@ -239,15 +239,15 @@ Main Components
   position: absolute;
   z-index: 100;
   pointer-events:none;
-  width: 810px;
-  height: 800px;
+  width: 350px;
+  height: 350px;
 }
 
 .feature {
     pointer-events: auto;
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     background-color: rgba(141, 26, 24, 0.3);
     text-align: center;
     vertical-align: middle;
@@ -260,22 +260,25 @@ Main Components
     visibility: hidden;
 }
 
-.feature:hover {
+.feature:hover,
+.feature.hovered {
   background-color: rgba(181, 66, 64, 0.6);
   border: 3px solid #b54240;
 }
 
 .features-explicit {
-    background-color: #404040;
+    background-color: transparent;
     min-width: 400px;
-    max-width: 400px;
-    height: 800px;
+    max-width: 600px;
+    height: 350px;
     box-shadow: -4px 0px 16px 0px rgba(0, 0, 0, 0.30);
     z-index: 1000;
+    overflow-y: scroll;
 }
 
 .feature-explicit {
     padding: 1em;
+    margin-right: 1em;
     overflow-wrap: break-word;
     border-left: solid 0.3em transparent;
     border-bottom: solid 1px #4f4f4f;
@@ -287,7 +290,7 @@ Main Components
 
 .feature-explicit-expand {
     font-size: 75%;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .tooltip {
@@ -295,9 +298,9 @@ Main Components
     border-radius: 5px;
     text-shadow: 1px 1px 2px black;
     background-color: rgba(0, 0, 0, 0.7);
-    margin-top: 8px;
-    padding: 1em;
-    max-width: 400px;
+    margin-top: 4px;
+    padding: 0.5em;
+    max-width: 350px;
     width: auto;
     text-overflow: ellipsis;
     overflow-wrap: break-word;

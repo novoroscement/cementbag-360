@@ -6,6 +6,7 @@
 
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
   	
 	<title>Портландцемент ГОСТ 31108-2016</title>
@@ -13,7 +14,7 @@
 <body>
 <div class="cd-product-viewer-wrapper" data-frame="36" data-friction="0.33">
 	<div class="cd-product-viewer-mask">
-	    <div class="features">
+	    <div class="features" data-pos-scale-x="0.4375" data-pos-scale-y="0.5" data-pos-offset-y="-50">
 	        <div id="bag-address"
                  class='feature' 
 	             data-tooltip="ОАО&nbsp;&laquo;Верхнебаканский&nbsp;цементный&nbsp;завод&raquo;, Россия, Краснодарский&nbsp;край, г.&nbsp;Новороссийск, п.&nbsp;Верхнебаканский, ул.&nbsp;Орловская, д.&nbsp;11 тел./факс:&nbsp;(8617)&nbsp;27&#8209;64&#8209;24, 27&#8209;64&#8209;25, sbyt@bakanka.ru"
@@ -56,7 +57,7 @@
 	    </div>
 
 		<figure class="product-viewer">
-			<img src="img/img-loading.jpg" alt="Product Preview">
+			<img id="product-preview" src="img/img-loading.png" alt="Product Preview">
 			<div class="product-sprite" data-image="img/img-sprite.png"></div>
 		</figure> <!-- .product-viewer -->
 
@@ -65,7 +66,7 @@
 			<span class="handle">Указатель</span>
 		</div>
     </div> <!-- .cd-product-viewer-handle -->
-    <div class="features-explicit">
+    <div class="features-explicit" data-simplebar>
         <div class="feature-explicit" data-feature-id="bag-material" data-slide="25"><h3>Фон мешка</h3><span class="feature-explicit-expand"></span></div>
         <div class="feature-explicit" data-feature-id="bag-logo" data-slide="0"><h3>Товарный знак</h3><span class="feature-explicit-expand"></span></div>
         <div class="feature-explicit" data-feature-id="bag-cert" data-slide="0"><h3>Знак соответствия обязательной сертификации СЛ02</h3><span class="feature-explicit-expand"></span></div>
@@ -81,6 +82,7 @@
 <script src="js/jquery.mobile.custom.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/tooltip.min.js"></script>
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->
 </body>
 </html>

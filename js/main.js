@@ -4,7 +4,7 @@ jQuery(document).ready(function($){
 	    this.element = element;
 	    this.frames = [];
 	    this.tooltip = new Tooltip(element, {
-	    	placement: 'center',
+	    	placement: 'bottom',
 	    	trigger: 'hover focus',
 	    	title: element.data('tooltip')
 	    });
@@ -47,6 +47,7 @@ jQuery(document).ready(function($){
 		this.handle = this.handleContainer.children('.handle');
 		this.imageWrapper = this.element.find('.product-viewer');
 		this.slideShow = this.imageWrapper.children('.product-sprite');
+		this.slideShowPreview = this.imageWrapper.children('#product-preview');
 		this.frames = this.element.data('frame');
 		//increase this value to increase the friction while dragging on the image - it has to be bigger than zero
 		this.friction = this.element.data('friction');
@@ -103,6 +104,28 @@ jQuery(document).ready(function($){
 
 		this.updateFeaturesTransform();
 
+
+		var posScaleX = 1.0;
+		var posScaleXData = this.featuresContainer.data('pos-scale-x');
+		if (posScaleXData != undefined)
+			posScaleX = parseFloat(posScaleXData);
+
+		var posScaleY = 1.0;
+		var posScaleYData = this.featuresContainer.data('pos-scale-y');
+		if (posScaleYData != undefined)
+			posScaleY = parseFloat(posScaleYData);
+
+		var posOffsetX = 0;
+		var posOffsetXData = this.featuresContainer.data('pos-offset-x');
+		if (posOffsetXData != undefined)
+			posOffsetX = parseFloat(posOffsetXData);
+
+		var posOffsetY = 0;
+		var posOffsetYData = this.featuresContainer.data('pos-offset-y');
+		if (posOffsetYData != undefined)
+			posOffsetY = parseFloat(posOffsetYData);
+
+
 	    var featureDomList = $('.feature');
 
 	    featureDomList.each(function(index) {
@@ -114,8 +137,8 @@ jQuery(document).ready(function($){
 			{
 			  var tupleData = positionInfos[i].match( /\d+/g );
 			  var frame = parseInt(tupleData[0], 10);
-			  var x = parseInt(tupleData[1], 10);
-			  var y = parseInt(tupleData[2], 10);
+			  var x = parseInt(tupleData[1], 10) * posScaleX + posOffsetX;
+			  var y = parseInt(tupleData[2], 10) * posScaleY + posOffsetY;
 			  var frameInfo = new frameVisibility(frame, x, y);
 			  feature.frames.push(frameInfo);
 			}
@@ -139,6 +162,7 @@ jQuery(document).ready(function($){
 				if(self.handle) self.dragHandle();
 
 	  			self.updateFeatures();
+		    	self.slideShowPreview.animate({ opacity: 0 })
 			} else {
 				//sprite image has not been loaded - increase self.handleFill scale value
 				var newPercentage = parseFloat(percentage) + .1;
@@ -281,13 +305,17 @@ jQuery(document).ready(function($){
 
     }
 
-    productViewer.prototype.slideTo = function (targetFrame, targetFeature, increment) {
-        if (this.busy) return;
+    productViewer.prototype.slideTo = function (targetFrame, targetFeature, increment, iteration) {
+        if (this.busy && (iteration == undefined || iteration === 0)) return;
         this.busy = true;
+
+        if (iteration == undefined)
+        	iteration = 0;
 
         targetFrame = parseInt(targetFrame) % this.frames;
 
         if (this.visibleFrame === targetFrame) {
+            targetFeature.element.addClass("hovered");
             targetFeature.tooltip.show();
             this.updateHandle();
             this.updateFeatures();
@@ -302,10 +330,12 @@ jQuery(document).ready(function($){
         this.visibleFrame = (this.visibleFrame + increment) % this.frames;
         this.updateFrame();
 
+    	if (iteration >= this.frames)
+    		return;
+
         var self = this;
         setTimeout(function () {
-            self.busy = false;
-            self.slideTo(targetFrame, targetFeature, increment);
+            self.slideTo(targetFrame, targetFeature, increment, iteration + 1);
         }, 24);
     }
 
@@ -347,7 +377,7 @@ jQuery(document).ready(function($){
         var runSlideShow = false;
         var targetSlide = parseInt($(this).data('slide'));
         $(this).hover(function () {
-            
+
             runSlideShow = true;
             setTimeout(function () {
 
@@ -369,6 +399,7 @@ jQuery(document).ready(function($){
         $(this).mouseleave(function () {
             runSlideShow = false;
             productFeature.tooltip.hide();
+            productFeature.element.removeClass("hovered");
         });
     });
 
