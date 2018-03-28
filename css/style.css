@@ -20,7 +20,7 @@ body {
   font-size: 1.6rem;
   font-family: sans-serif;
   color: #ffffff;
-  background-color: #000000;
+  background-color: none transparent;
 }
 
 a {
