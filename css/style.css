@@ -67,6 +67,8 @@ Main Components
     width: 350px;
     min-height: 350px;
     height: 350px;
+    position: fixed;
+    left: 0;
 }
 .cd-product-viewer-wrapper .product-viewer {
   position: relative;
@@ -272,12 +274,11 @@ Main Components
 
 .features-explicit {
     background-color: rgba(255,255,255,0.05);
+    margin-left: 350px;
     min-width: 300px;
     width: 100%;
-    height: 350px;
-    box-shadow: -4px 0px 16px 0px rgba(0, 0, 0, 0.30);
+    height: auto;
     z-index: 1000;
-    overflow-y: scroll;
 }
 
 .feature-explicit {
@@ -285,7 +286,7 @@ Main Components
     margin-right: 1em;
     overflow-wrap: break-word;
     border-left: solid 0.3em transparent;
-    border-bottom: solid 1px rgba(255,255,255,0.3);
+    border-bottom: solid 1px rgba(255,255,255,0.1);
 }
 
 .feature-explicit:hover {
