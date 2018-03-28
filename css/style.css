@@ -20,7 +20,7 @@ body {
   font-size: 1.6rem;
   font-family: sans-serif;
   color: #ffffff;
-  background-color: none transparent;
+  background: none transparent;
 }
 
 a {
@@ -109,7 +109,7 @@ Main Components
   border-radius: 50em;
   margin: -1.5em auto 3em;
   height: 4px;
-  background: #4d4d4d;
+  background: #585E6A;
 }
 .cd-product-viewer-handle .fill {
   /* this is used to create the loading fill effect */
@@ -120,7 +120,7 @@ Main Components
   height: 100%;
   width: 100%;
   border-radius: inherit;
-  background: #b54240;
+  background: #1D2657;
   -webkit-transform: scaleX(0);
   -moz-transform: scaleX(0);
   -ms-transform: scaleX(0);
@@ -153,9 +153,9 @@ Main Components
   width: 22px;
   left: 0;
   top: -10px;
-  background: #b54240 url(../img/cd-arrows.svg) no-repeat center center;
+  background: #1D2657 url(../img/cd-arrows.svg) no-repeat center center;
   border-radius: 50%;
-  box-shadow: 0 0 0 6px rgba(181, 66, 64, 0.3), 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 6px rgba(88, 94, 106, 0.3), 0 0 20px rgba(0, 0, 0, 0.2);
   /* replace text with image */
   text-indent: 100%;
   white-space: nowrap;
@@ -170,8 +170,12 @@ Main Components
   -moz-transition: box-shadow 0.2s;
   transition: box-shadow 0.2s;
 }
+.cd-product-viewer-handle .handle:hover {
+  background: #3E52B7 url(../img/cd-arrows.svg) no-repeat center center;
+  box-shadow: 0 0 0 6px rgba(152, 161, 181, 0.1), 0 0 20px rgba(0, 0, 0, 0.2);
+}
 .cd-product-viewer-handle .handle:active {
-  box-shadow: 0 0 0 0 rgba(181, 66, 64, 0), 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 0 rgba(88, 94, 06, 0), 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .loaded .cd-product-viewer-handle .handle {
   /* image sprite has been loaded */
@@ -248,7 +252,7 @@ Main Components
     position: relative;
     width: 20px;
     height: 20px;
-    background-color: rgba(141, 26, 24, 0.3);
+    background-color: rgba(88, 94, 106, 0.3);
     text-align: center;
     vertical-align: middle;
     line-height: 30px;
@@ -256,14 +260,14 @@ Main Components
     font-weight: bold;
     font-size: 24px;
     border-radius: 100%;
-    border: 3px solid rgba(141, 26, 24, 0.6);
+    border: 3px solid #1D2657;
     visibility: hidden;
 }
 
 .feature:hover,
 .feature.hovered {
-  background-color: rgba(181, 66, 64, 0.6);
-  border: 3px solid #b54240;
+  background-color: rgba(152, 161, 181, 0.6);
+  border: 3px solid #3E52B7;
 }
 
 .features-explicit {

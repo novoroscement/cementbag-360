@@ -1,3 +1,12 @@
+function inIframe () {
+	    try {
+	        return window.self !== window.top;
+	    } catch (e) {
+	        return true;
+	    }
+	}
+
+
 jQuery(document).ready(function($){
 
 	var productFeature = function(element) {
@@ -355,6 +364,15 @@ jQuery(document).ready(function($){
 			'transform': value,
 		});
     }
+
+
+    if (!inIframe())
+    {
+    	$('body').css({
+    		background: "#6779B5"
+    	});
+    }
+
     
     var viewer = new productViewer($('.cd-product-viewer-wrapper'));
 
