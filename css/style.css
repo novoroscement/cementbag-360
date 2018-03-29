@@ -177,6 +177,7 @@ Main Components
   box-shadow: 0 0 0 6px rgba(152, 161, 181, 0.1), 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .cd-product-viewer-handle .handle:active {
+  background: #3E52B7 url(../img/cd-arrows.svg) no-repeat center center;
   box-shadow: 0 0 0 0 rgba(88, 94, 06, 0), 0 0 20px rgba(0, 0, 0, 0.2);
 }
 .loaded .cd-product-viewer-handle .handle {
