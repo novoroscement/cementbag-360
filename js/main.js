@@ -340,7 +340,10 @@ jQuery(document).ready(function($){
         this.updateFrame();
 
     	if (iteration >= this.frames)
+    	{
+    		this.busy = false;
     		return;
+    	}
 
         var self = this;
         setTimeout(function () {
