@@ -372,7 +372,7 @@ jQuery(document).ready(function($){
     if (!inIframe())
     {
     	$('body').css({
-    		background: "#6779B5"
+    		background: "#FFFFFF"
     	});
     }
 
