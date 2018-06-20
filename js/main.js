@@ -15,7 +15,8 @@ jQuery(document).ready(function($){
 	    this.tooltip = new Tooltip(element, {
 	    	placement: 'bottom',
 	    	trigger: 'hover focus',
-	    	title: element.data('tooltip')
+	    	title: element.data('tooltip'),
+	    	html: true
 	    });
 	}
 
@@ -393,7 +394,7 @@ jQuery(document).ready(function($){
         if (productFeature == null)
             return;
 
-        $($(this).children('.feature-explicit-expand')[0]).text(productFeature.element.data('tooltip'));
+        $($(this).children('.feature-explicit-expand')[0]).html(productFeature.element.data('tooltip'));
 
         var runSlideShow = false;
         var targetSlide = parseInt($(this).data('slide'));
